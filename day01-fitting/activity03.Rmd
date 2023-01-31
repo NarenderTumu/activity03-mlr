@@ -3,6 +3,81 @@ title: "Activity 2 - Day 1"
 output: github_document
 ---
 
-```{setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Task2 : Loading the necessary packages
+
+```{r Loading_packages}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(tidymodels))
+suppressPackageStartupMessages(library(GGally))
+
+```
+
+## Task3 : Loading the data
+
+```{r Loading_dataset}
+hfi<-readr::read_csv("https://www.openintro.org/data/csv/hfi.csv",show_col_types = FALSE)
+```
+
+1) This is an observational study as it was not using or conducting any experiment to produce the reports. 
+
+## Plot to visualize the distribution of pf_score
+
+```{r}
+plot1 <- hfi %>% ggplot(aes(x=pf_score))+
+  geom_histogram(fill="dodgerblue",color="black")+
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10))+
+  scale_y_continuous(breaks = c(0,20,40,60,80,100))+
+  theme_bw()
+
+plot1
+```
+
+2) The univariate histogram for pf_score is left_skewed with extreme outliers on the left (very low pf_scores) and multiple peaks. I expected that a lot of countries will be having low pf_scores but surprisingly it was the opposite.
+
+
+3) I have decided to describe the relation between pf_rol_civil and pf_rol_criminal which looks Linear relationship for me and displayed below with the help of a scatter plot and linear regression line.
+
+```{r}
+plot2<- hfi %>% ggplot(aes(x=pf_rol_criminal,y=pf_rol_civil))+
+  geom_point(color="red")+
+  geom_smooth(method = lm)+
+  theme_bw()
+
+plot2
+```
+
+# Task4 : Pairwise relationships
+
+```{r,warning=FALSE}
+hfi %>% 
+  select(ends_with("_score")) %>% 
+  ggpairs()
+```
+
+
+4)  - hf_score and pf_score -  strong Linear relationship
+    - hf_score and ef_score -  moderate Linear relationship
+    - pf_score and ef_score -  no relationship (nuetral)
+    
+5)  - hf_score and pf_score are highly correlated with correlation-coefficient of 0.943
+    - hf_score and ef_score are highly correlated with correlation-coefficient of 0.855
+    - ef_score and pf_score are moderately correlated with correlation-coefficient of 0.633
+    
+## Task5 : The Multiple Linear Regression Model
+
+```{r}
+m_hr_ef <- lm(pf_score ~ hf_score + ef_score, data = hfi)
+tidy(m_hr_ef)
+```
+
+6) The estimated equation for this model is
+
+$$
+\texttt{pf_score} = (1.464213e-11) + (2.000000e+00) \times \texttt{hf_score} + (-1.000000e+00) \times \texttt{ef_score} + \varepsilon
+$$
+
+

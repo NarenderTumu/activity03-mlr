@@ -101,5 +101,7 @@ tidy(m_hr_ef)
 6.  The estimated equation for this model is
 
 $$
-\texttt{pf_score} = (1.464213e \m 11) + (2.000000e+00) \times \texttt{hf_score} + (-1.000000e+00) \times \texttt{ef_score} + \varepsilon
+\texttt{pf_score} = (1.464213e-11) + (2.000000e+00) \times \texttt{hf_score} + (-1.000000e+00) \times \texttt{ef_score} + \varepsilon
 $$
+
+**I am done for the day**

@@ -7,6 +7,7 @@ Activity 2 - Day 1
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(tidymodels))
 suppressPackageStartupMessages(library(GGally))
+suppressPackageStartupMessages(library(scatterplot3d))
 ```
 
 ## Task3 : Loading the data
@@ -101,7 +102,26 @@ tidy(m_hr_ef)
 6.  The estimated equation for this model is
 
 $$
-\texttt{pf_score} = (1.464213e-11) + (2.000000e+00) \times \texttt{hf_score} + (-1.000000e+00) \times \texttt{ef_score} + \varepsilon
+pf\_score=(1.464213e-11)+ (2.000000e+00)\times hf\_score + (-1.000000e+00)\times ef\_score + \varepsilon
 $$
 
-**I am done for the day**
+7.  Not sure what to do for this question
+
+## Challenege: 3-D Plots
+
+``` r
+# Selected only the required columns from the main dataset "hfi" and assigned them to a new dataset "hfi2"
+
+hfi2<-select(hfi,c("pf_score","ef_score","hf_score"))
+
+plot3<-scatterplot3d::scatterplot3d(hfi2[1:100,],main = "3-D Scatterplot",pch = 20,color = "red",grid = FALSE,type ="h",box = FALSE)
+
+
+# adding a regression plane to the 3-d scatter plot
+
+my.lm <- lm(hfi2$pf_score ~ hfi2$hf_score+ hfi2$ef_score )
+
+plot3$plane3d(my.lm,lty="dashed" ,draw_polygon = TRUE,draw_lines = FALSE)
+```
+
+![](activity03_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->

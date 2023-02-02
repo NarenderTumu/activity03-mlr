@@ -109,6 +109,10 @@ $$
 
 ## Challenege: 3-D Plots
 
+I have used this
+[Reference](http://www.sthda.com/english/wiki/scatterplot3d-3d-graphics-r-software-and-data-visualization)
+for 3-D scatterplot visualization
+
 ``` r
 # Selected only the required columns from the main dataset "hfi" and assigned them to a new dataset "hfi2"
 

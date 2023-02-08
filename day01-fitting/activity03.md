@@ -105,7 +105,10 @@ $$
 pf\_score=(1.464213e-11)+ (2.000000e+00)\times hf\_score + (-1.000000e+00)\times ef\_score + \varepsilon
 $$
 
-7.  Not sure what to do for this question
+7.  When given the values of hf\_score and ef\_score of a country we can
+    substitute those values in the above equation with y-intercept and
+    slopes of explanatory variables to predict the nearest pf\_score
+    approximately.
 
 ## Challenege: 3-D Plots
 
@@ -129,3 +132,78 @@ plot3$plane3d(my.lm,lty="dashed" ,draw_polygon = TRUE,draw_lines = FALSE)
 ```
 
 ![](activity03_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+8.  yes, both the plots (3D-Scatter plot & ggpairs) displayed in github
+    when I pushed my work there. When comparing those visualizations I
+    found it easy to find the relationships and correlations of the
+    variables in ggpairs plot than the 3D-scatter plot and also the
+    ggpairs plot provides the correlation coefficient of the variables
+    which makes it more easy to take a decision on the relationship of
+    variables. Whereas, in 3D-scatter plot it is easy to visualize all
+    three variables in the same plot.
+
+# Day 2
+
+## Task 2: Overall model - is at least one predictor useful?
+
+``` r
+# review any visual patterns
+hfi %>% 
+  select(pf_score, pf_expression_influence, pf_expression_control) %>% 
+  ggpairs()
+```
+
+![](activity03_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+#fit the mlr model
+m_pf <- lm(pf_score ~ pf_expression_influence + pf_expression_control, data = hfi)
+tidy(m_pf)
+```
+
+    ## # A tibble: 3 × 5
+    ##   term                    estimate std.error statistic  p.value
+    ##   <chr>                      <dbl>     <dbl>     <dbl>    <dbl>
+    ## 1 (Intercept)                4.71     0.0566     83.1  0       
+    ## 2 pf_expression_influence    0.188    0.0205      9.19 1.44e-19
+    ## 3 pf_expression_control      0.288    0.0242     11.9  2.84e-31
+
+1.  The correlation coefficients values (0.787 & 0.796) means that , the
+    pf\_expression\_influence is having a 78.7 percent of positive or
+    direct relationship with pf\_score whereas the
+    pf\_expression\_control is having a 79.6 percent of positive or
+    direct relationship with pf\_score.
+
+``` r
+summary(m_pf)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = pf_score ~ pf_expression_influence + pf_expression_control, 
+    ##     data = hfi)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.9776 -0.5338  0.1493  0.5807  3.4627 
+    ## 
+    ## Coefficients:
+    ##                         Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)              4.70699    0.05664  83.102   <2e-16 ***
+    ## pf_expression_influence  0.18812    0.02048   9.187   <2e-16 ***
+    ## pf_expression_control    0.28829    0.02417  11.926   <2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.8077 on 1375 degrees of freedom
+    ##   (80 observations deleted due to missingness)
+    ## Multiple R-squared:  0.6554, Adjusted R-squared:  0.6549 
+    ## F-statistic:  1308 on 2 and 1375 DF,  p-value: < 2.2e-16
+
+2.  We can take a decision to reject the null hypothesis from out
+    Hypothesis testing
+
+3.  The decision means that at least one of the explanatory
+    variables(pf\_expression\_influence & pf\_expression\_control)will
+    be helpful to predict and have a positive relationship with Response
+    variable (pf\_score).

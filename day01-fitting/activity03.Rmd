@@ -83,7 +83,7 @@ pf\_score=(1.464213e-11)+ (2.000000e+00)\times hf\_score + (-1.000000e+00)\times
 $$
 
 
-7) Not sure what to do for this question
+7) When given the values of hf_score and ef_score of a country we can substitute those values in the above equation with y-intercept and slopes of explanatory variables to predict the nearest pf_score approximately.
 
 
 
@@ -108,5 +108,38 @@ plot3$plane3d(my.lm,lty="dashed" ,draw_polygon = TRUE,draw_lines = FALSE)
 
 
 ```
+
+
+8) yes, both the plots (3D-Scatter plot & ggpairs) displayed in github when I pushed my work there. When comparing those visualizations I found it easy to find the relationships and correlations of the variables in ggpairs plot than the 3D-scatter plot and also the ggpairs plot provides the correlation coefficient of the variables which makes it more easy to take a decision on the relationship of variables. Whereas, in 3D-scatter plot it is easy to visualize all three variables in the same plot.
+
+
+# Day 2
+
+## Task 2: Overall model - is at least one predictor useful?
+
+```{r,warning=FALSE}
+# review any visual patterns
+hfi %>% 
+  select(pf_score, pf_expression_influence, pf_expression_control) %>% 
+  ggpairs()
+
+#fit the mlr model
+m_pf <- lm(pf_score ~ pf_expression_influence + pf_expression_control, data = hfi)
+tidy(m_pf)
+
+```
+
+
+1) The correlation coefficients values (0.787 & 0.796) means that , the pf_expression_influence is having a 78.7 percent of positive or direct relationship with pf_score whereas the pf_expression_control is having a 79.6 percent of positive or direct relationship with pf_score.
+
+
+```{r}
+summary(m_pf)
+```
+
+2) We can take a decision to reject the null hypothesis from out Hypothesis testing
+
+3) The decision means that at least one of the explanatory variables(pf_expression_influence & pf_expression_control)will be helpful to predict and have a positive relationship with Response variable (pf_score).
+
 
 

@@ -293,3 +293,35 @@ ggplot(data = m_pf_aug, aes(x = .resid)) +
 13. Based on the residuals vs. fitted plot, the constant variability
     condition appear is not violated, because there is an roughly equal
     spread of residuals at each level of fitted values
+
+## Task 5: Prediction
+
+``` r
+hfi %>% 
+  filter(countries == "United States" & year == 2016) %>% 
+  predict(m_pf, .)
+```
+
+    ##       1 
+    ## 8.23002
+
+``` r
+hfi3<-select(hfi,c("pf_expression_control","pf_expression_influence","pf_score","year","countries"))
+
+hfi3[hfi3$countries=="United States",]
+```
+
+    ## # A tibble: 9 × 5
+    ##   pf_expression_control pf_expression_influence pf_score  year countries    
+    ##                   <dbl>                   <dbl>    <dbl> <dbl> <chr>        
+    ## 1                  7                       8        8.75  2016 United States
+    ## 2                  7.5                     8        8.83  2015 United States
+    ## 3                  7.25                    8        8.85  2014 United States
+    ## 4                  7.5                     8        8.63  2013 United States
+    ## 5                  7.5                     9        8.62  2012 United States
+    ## 6                  7.5                     9        8.71  2011 United States
+    ## 7                  8                       8.67     8.71  2010 United States
+    ## 8                  8                       8.33     8.57  2009 United States
+    ## 9                  8                       8.33     8.73  2008 United States
+
+12. The residual was 0.51731

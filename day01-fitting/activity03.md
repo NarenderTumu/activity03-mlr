@@ -153,6 +153,26 @@ hfi %>%
   ggpairs()
 ```
 
+    ## Warning: Removed 80 rows containing non-finite values (stat_density).
+
+    ## Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+    ## Removed 80 rows containing missing values
+
+    ## Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+    ## Removed 80 rows containing missing values
+
+    ## Warning: Removed 80 rows containing missing values (geom_point).
+
+    ## Warning: Removed 80 rows containing non-finite values (stat_density).
+
+    ## Warning in ggally_statistic(data = data, mapping = mapping, na.rm = na.rm, :
+    ## Removed 80 rows containing missing values
+
+    ## Warning: Removed 80 rows containing missing values (geom_point).
+    ## Removed 80 rows containing missing values (geom_point).
+
+    ## Warning: Removed 80 rows containing non-finite values (stat_density).
+
 ![](activity03_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
@@ -207,3 +227,69 @@ summary(m_pf)
     variables(pf\_expression\_influence & pf\_expression\_control)will
     be helpful to predict and have a positive relationship with Response
     variable (pf\_score).
+
+## Task 3: Deciding on important variables
+
+4.  The statistic values for pf\_expression\_influence and
+    pf\_expression\_control are correct and verified
+
+5.  These are T-statistic values
+
+6.  The F-statistic has 2 degrees of freedom for the numerator and 1375
+    for the denominator The T-statistic has 1376 degrees of freedom
+
+7.  I think it is better to use the F-statistic as per my knowledge
+
+## Task 4: Model fit
+
+``` r
+glance(m_pf)
+```
+
+    ## # A tibble: 1 × 12
+    ##   r.squared adj.r.squ…¹ sigma stati…²   p.value    df logLik   AIC   BIC devia…³
+    ##       <dbl>       <dbl> <dbl>   <dbl>     <dbl> <dbl>  <dbl> <dbl> <dbl>   <dbl>
+    ## 1     0.655       0.655 0.808   1308. 8.19e-319     2 -1660. 3327. 3348.    897.
+    ## # … with 2 more variables: df.residual <int>, nobs <int>, and abbreviated
+    ## #   variable names ¹​adj.r.squared, ²​statistic, ³​deviance
+
+8.  The value of R-squared value is 0.6554
+
+9.  The R-squared value tells that this model can explain 65.54 percent
+    of variation in the independent variable
+
+10. 
+
+``` r
+# obtain fitted values and residuals
+m_pf_aug <- augment(m_pf)
+
+# plot fitted values and residuals
+ggplot(data = m_pf_aug, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  xlab("Fitted values") +
+  ylab("Residuals")
+```
+
+![](activity03_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+11. There seems to be no particular pattern in the residual plot above,
+    this tells us that the relationship between dependent and
+    independent variables is linear
+
+``` r
+ggplot(data = m_pf_aug, aes(x = .resid)) +
+  geom_histogram(binwidth = 0.25) +
+  xlab("Residuals")
+```
+
+![](activity03_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+12. Based on the histogram, the nearly normal residuals condition does
+    not appear to be violated because there is only one peak and the
+    residuals were normally distributed .
+
+13. Based on the residuals vs. fitted plot, the constant variability
+    condition appear is not violated, because there is an roughly equal
+    spread of residuals at each level of fitted values

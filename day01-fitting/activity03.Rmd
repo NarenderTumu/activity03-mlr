@@ -117,7 +117,7 @@ plot3$plane3d(my.lm,lty="dashed" ,draw_polygon = TRUE,draw_lines = FALSE)
 
 ## Task 2: Overall model - is at least one predictor useful?
 
-```{r,warning=FALSE}
+```{r}
 # review any visual patterns
 hfi %>% 
   select(pf_score, pf_expression_influence, pf_expression_control) %>% 
@@ -140,6 +140,58 @@ summary(m_pf)
 2) We can take a decision to reject the null hypothesis from out Hypothesis testing
 
 3) The decision means that at least one of the explanatory variables(pf_expression_influence & pf_expression_control)will be helpful to predict and have a positive relationship with Response variable (pf_score).
+
+
+## Task 3: Deciding on important variables
+
+
+4)  The statistic values for pf_expression_influence and pf_expression_control are correct and verified
+
+5) These are T-statistic values
+
+6)  The F-statistic has 2 degrees of freedom for the numerator and 1375 for the denominator
+    The T-statistic has 1376 degrees of freedom
+    
+7) I think it is better to use the F-statistic as per my knowledge
+
+
+## Task 4: Model fit
+
+```{r}
+glance(m_pf)
+```
+
+8) The value of R-squared value is 0.6554
+
+9) The R-squared value tells that this model can explain 65.54 percent of variation in the independent variable
+
+10) 
+
+
+```{r}
+# obtain fitted values and residuals
+m_pf_aug <- augment(m_pf)
+
+# plot fitted values and residuals
+ggplot(data = m_pf_aug, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  xlab("Fitted values") +
+  ylab("Residuals")
+```
+
+11) There seems to be no particular pattern in the residual plot above, this tells us that the relationship between dependent and independent variables is linear 
+
+
+```{r}
+ggplot(data = m_pf_aug, aes(x = .resid)) +
+  geom_histogram(binwidth = 0.25) +
+  xlab("Residuals")
+```
+
+12) Based on the histogram, the nearly normal residuals condition does not appear to be violated because there is only one peak and the residuals were normally distributed .
+
+13) Based on the residuals vs. fitted plot, the constant variability condition appear is not violated, because there is an roughly equal spread of residuals at each level of fitted values
 
 
 
